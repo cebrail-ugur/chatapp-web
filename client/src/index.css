@@ -1,0 +1,359 @@
+/*
+ * ChatApp Ultra - "WhatsApp Evolved" Dark Theme
+ * Design: Deep dark backgrounds, teal (#00a884) accent
+ * Typography: Noto Sans for headings, system UI for body
+ * Security-focused UI with glassmorphism elements
+ */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+/* ChatApp Ultra Dark Theme - WhatsApp Evolved */
+:root {
+  --radius: 0.625rem;
+  --background: oklch(0.13 0.015 200);
+  --foreground: oklch(0.92 0.005 200);
+  --card: oklch(0.18 0.015 200);
+  --card-foreground: oklch(0.92 0.005 200);
+  --popover: oklch(0.18 0.015 200);
+  --popover-foreground: oklch(0.92 0.005 200);
+  --primary: oklch(0.65 0.16 166);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.22 0.015 200);
+  --secondary-foreground: oklch(0.85 0.005 200);
+  --muted: oklch(0.20 0.012 200);
+  --muted-foreground: oklch(0.58 0.01 200);
+  --accent: oklch(0.22 0.015 200);
+  --accent-foreground: oklch(0.92 0.005 200);
+  --destructive: oklch(0.58 0.24 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.28 0.012 200);
+  --input: oklch(0.25 0.012 200);
+  --ring: oklch(0.65 0.16 166);
+  --chart-1: oklch(0.65 0.16 166);
+  --chart-2: oklch(0.55 0.14 166);
+  --chart-3: oklch(0.45 0.12 166);
+  --chart-4: oklch(0.35 0.10 166);
+  --chart-5: oklch(0.25 0.08 166);
+  --sidebar: oklch(0.15 0.015 200);
+  --sidebar-foreground: oklch(0.92 0.005 200);
+  --sidebar-primary: oklch(0.65 0.16 166);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.22 0.015 200);
+  --sidebar-accent-foreground: oklch(0.92 0.005 200);
+  --sidebar-border: oklch(0.28 0.012 200);
+  --sidebar-ring: oklch(0.65 0.16 166);
+}
+
+.dark {
+  --background: oklch(0.13 0.015 200);
+  --foreground: oklch(0.92 0.005 200);
+  --card: oklch(0.18 0.015 200);
+  --card-foreground: oklch(0.92 0.005 200);
+  --popover: oklch(0.18 0.015 200);
+  --popover-foreground: oklch(0.92 0.005 200);
+  --primary: oklch(0.65 0.16 166);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.22 0.015 200);
+  --secondary-foreground: oklch(0.85 0.005 200);
+  --muted: oklch(0.20 0.012 200);
+  --muted-foreground: oklch(0.58 0.01 200);
+  --accent: oklch(0.22 0.015 200);
+  --accent-foreground: oklch(0.92 0.005 200);
+  --destructive: oklch(0.58 0.24 27);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.28 0.012 200);
+  --input: oklch(0.25 0.012 200);
+  --ring: oklch(0.65 0.16 166);
+  --chart-1: oklch(0.65 0.16 166);
+  --chart-2: oklch(0.55 0.14 166);
+  --chart-3: oklch(0.45 0.12 166);
+  --chart-4: oklch(0.35 0.10 166);
+  --chart-5: oklch(0.25 0.08 166);
+  --sidebar: oklch(0.15 0.015 200);
+  --sidebar-foreground: oklch(0.92 0.005 200);
+  --sidebar-primary: oklch(0.65 0.16 166);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.22 0.015 200);
+  --sidebar-accent-foreground: oklch(0.92 0.005 200);
+  --sidebar-border: oklch(0.28 0.012 200);
+  --sidebar-ring: oklch(0.65 0.16 166);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Noto Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  [type="button"]:not(:disabled),
+  [type="submit"]:not(:disabled),
+  [type="reset"]:not(:disabled),
+  a[href],
+  select:not(:disabled),
+  input[type="checkbox"]:not(:disabled),
+  input[type="radio"]:not(:disabled) {
+    @apply cursor-pointer;
+  }
+}
+
+@layer components {
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .flex {
+    min-height: 0;
+    min-width: 0;
+  }
+
+  @media (min-width: 640px) {
+    .container {
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container {
+      padding-left: 2rem;
+      padding-right: 2rem;
+      max-width: 1280px;
+    }
+  }
+}
+
+/* Custom scrollbar for WhatsApp feel */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(134, 150, 160, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(134, 150, 160, 0.5);
+}
+
+/* RTL support for Arabic */
+[dir="rtl"] {
+  text-align: right;
+}
+[dir="rtl"] .flex-row {
+  flex-direction: row-reverse;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: background-color, border-color, color, opacity;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+
+/* Disable transitions for layout properties to avoid jank */
+*:not([class*="animate"]):not([class*="transition"]) {
+  transition-property: background-color, border-color, color, opacity;
+}
+
+/* ============================================
+   MOBİL OPTİMİZASYON - Safe Area & Touch
+   ============================================ */
+
+/* iPhone notch/home indicator için safe area */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Mobil tam ekran layout - üst ve alt safe area korumalı */
+@media (max-width: 640px) {
+  /* Ana container'da overflow koruması */
+  .h-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+  }
+}
+
+/* Mobil cihazlarda input zoom'u engelle (16px minimum) */
+@media (max-width: 640px) {
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+}
+
+/* Mobil touch hedefleri - minimum 44px */
+@media (max-width: 640px) {
+  button, [role="button"] {
+    min-width: 36px;
+    min-height: 36px;
+  }
+}
+
+/* Mobil klavye açıldığında layout düzeltmesi */
+@supports (height: 100dvh) {
+  .h-screen {
+    height: 100dvh;
+  }
+}
+
+/* Mobil: Mesaj alanı taşma önleme */
+@media (max-width: 640px) {
+  [data-radix-scroll-area-viewport] {
+    max-height: calc(100dvh - 7rem) !important;
+  }
+}
+
+/* Mobil scroll optimizasyonu */
+@media (max-width: 640px) {
+  .overflow-y-auto,
+  [data-radix-scroll-area-viewport] {
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+}
+
+/* Mobil mesaj baloncukları - daha kompakt */
+@media (max-width: 640px) {
+  .space-y-1 > * + * {
+    margin-top: 0.125rem;
+  }
+}
+
+/* ============================================
+   GELİŞTİRİLMİŞ MOBİL OPTİMİZASYON
+   ============================================ */
+
+/* Mobil: Landing page smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Mobil: Sidebar ve ChatArea geçiş animasyonu */
+@media (max-width: 768px) {
+  .flex.flex-col {
+    will-change: transform;
+  }
+}
+
+/* Mobil: Dialog içeriği scroll edilebilir */
+@media (max-width: 640px) {
+  [data-radix-dialog-content] {
+    max-height: 90dvh !important;
+    overflow-y: auto !important;
+    margin: 1rem !important;
+  }
+}
+
+/* Mobil: Arama ekranı tam ekran */
+@media (max-width: 640px) {
+  .fixed.inset-0.z-50 {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+  }
+}
+
+/* Mobil: Landing page hero section daha kompakt */
+@media (max-width: 640px) {
+  .min-h-screen.flex.items-center {
+    min-height: 100dvh;
+    padding-top: 4rem;
+    padding-bottom: 2rem;
+  }
+}
+
+/* Mobil: Buton tıklama geri bildirimi */
+@media (max-width: 768px) {
+  button:active,
+  [role="button"]:active,
+  a:active {
+    transform: scale(0.97);
+    transition: transform 0.1s ease;
+  }
+}
+
+/* Mobil: Navbar blur desteği */
+@supports (backdrop-filter: blur(12px)) {
+  .backdrop-blur-xl {
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+/* Mobil: Scroll area daha iyi performans */
+@media (max-width: 640px) {
+  [data-radix-scroll-area-viewport] {
+    contain: layout style;
+  }
+}
+
+/* Mobil: Admin panel scroll */
+@media (max-width: 640px) {
+  .fixed.inset-0.z-40 {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

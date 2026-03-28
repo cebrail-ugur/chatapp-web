@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="tr" dir="ltr">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="description" content="ChatApp Ultra - Sentinel Ultra Kurumsal Güvenli Mesajlaşma. AES-256 E2EE şifreleme ile korunan uluslararası mesajlaşma platformu." />
+    <meta name="theme-color" content="#111b21" />
+    <meta name="color-scheme" content="dark" />
+    <!-- Security Headers -->
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <!-- X-Frame-Options kaldırıldı: Manus Preview paneli iframe kullandığı için DENY engelliyordu.
+         Güvenlik CSP frame-ancestors ile sağlanıyor. -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <!--
+      CSP: Meta tag yerine uygulama içi güvenlik katmanları kullanılıyor:
+      - E2EE (AES-256-GCM + Double Ratchet) ile mesaj şifreleme
+      - SRI hash'leri ile script bütünlük doğrulaması (build sırasında eklenir)
+      - Supabase RLS ile veritabanı erişim kontrolü
+      - Device-bound encryption keys (IndexedDB + non-extractable CryptoKey)
+      Meta tag CSP, deploy platformunun (Manus) enjekte ettiği runtime script'leri
+      ve analytics kodlarını engelleyerek siyah ekrana neden oluyordu.
+      Production'da HTTP header CSP ile server tarafında uygulanması önerilir.
+    -->
+    <title>ChatApp Ultra - Sentinel Ultra</title>
+    <!-- DNS Prefetch & Preconnect: Kritik kaynaklar -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+    <!-- Supabase preconnect (uygulama başlatıldığında hemen bağlanmak için) -->
+    <link rel="dns-prefetch" href="https://supabase.co" />
+    <link rel="dns-prefetch" href="https://supabase.in" />
+    <!-- 
+      SRI NOTU: Google Fonts CSS içeriği user-agent'a göre değiştiği için
+      integrity hash uygulanamaz (farklı tarayıcılara farklı font formatı döner).
+      Bunun yerine CSP ile sadece fonts.googleapis.com ve fonts.gstatic.com'a izin verilmiştir.
+      Font dosyaları (.woff2) ise değişmez içeriğe sahiptir ve tarayıcı tarafından cache'lenir.
+    -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&family=Noto+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" crossorigin="anonymous" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+
+</html>

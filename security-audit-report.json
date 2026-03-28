@@ -1,0 +1,348 @@
+{
+  "timestamp": "2026-02-27T11:41:51.451Z",
+  "summary": {
+    "total": 48,
+    "critical": 0,
+    "high": 0,
+    "medium": 3,
+    "low": 45
+  },
+  "results": [
+    {
+      "category": "Nonce Reuse",
+      "test": "IV üretimi",
+      "risk": "LOW",
+      "finding": "PASS: crypto.getRandomValues(12) kullanılıyor",
+      "detail": "ratchet.ts'de 2 adet 12-byte random IV üretimi bulundu. CSPRNG kullanımı doğru."
+    },
+    {
+      "category": "Nonce Reuse",
+      "test": "NonceManager hibrit yapı",
+      "risk": "LOW",
+      "finding": "PASS: Random + Counter hibrit nonce yapısı mevcut",
+      "detail": "nonceManager.ts: 64-bit random + 32-bit counter yapısı. Collision olasılığı ~2^-64 seviyesinde."
+    },
+    {
+      "category": "Nonce Reuse",
+      "test": "Collision detection",
+      "risk": "LOW",
+      "finding": "PASS: Nonce collision detection mevcut",
+      "detail": "Üretilen nonce'lar kontrol ediliyor, tekrar kullanım engelleniyor."
+    },
+    {
+      "category": "Nonce Reuse",
+      "test": "Rekey sonrası nonce güvenliği",
+      "risk": "LOW",
+      "finding": "PASS: Rekey sonrası yeni chain key + counter reset",
+      "detail": "Counter sıfırlansa bile yeni chain key ile farklı message key türetilir. Nonce çakışması imkansız çünkü IV random üretiliyor."
+    },
+    {
+      "category": "Nonce Reuse",
+      "test": "Counter monotonluğu",
+      "risk": "LOW",
+      "finding": "PASS: sendCount monoton artan",
+      "detail": "Her mesajda sendCount+1 yapılıyor. Aynı session içinde counter geri dönmez."
+    },
+    {
+      "category": "Channel Key Isolation",
+      "test": "Cache workspace izolasyonu",
+      "risk": "LOW",
+      "finding": "PASS: Cache key'leri workspace_id + channel_id ile izole",
+      "detail": "CHANNEL_KEY_CACHE_PREFIX + workspaceId + \"_\" + channelId formatı kullanılıyor."
+    },
+    {
+      "category": "Channel Key Isolation",
+      "test": "ECDH domain separation",
+      "risk": "LOW",
+      "finding": "PASS: HKDF salt'ında channel_id domain separation mevcut",
+      "detail": "Salt: \"sentinel-ckw-v1-\" + channelId → Farklı kanallar için farklı wrapping key türetilir."
+    },
+    {
+      "category": "Channel Key Isolation",
+      "test": "SQL workspace_id kolonu",
+      "risk": "LOW",
+      "finding": "PASS: channel_keys tablosunda workspace_id kolonu mevcut",
+      "detail": "Her channel key kaydı workspace_id ile etiketleniyor."
+    },
+    {
+      "category": "Channel Key Isolation",
+      "test": "Row-Level Security",
+      "risk": "LOW",
+      "finding": "PASS: RLS politikaları tanımlı",
+      "detail": "Supabase RLS ile workspace seviyesinde erişim kontrolü."
+    },
+    {
+      "category": "Channel Key Isolation",
+      "test": "Spoofing koruması",
+      "risk": "LOW",
+      "finding": "PASS: Supabase query'lerde device_id + workspace_id filtresi",
+      "detail": "Başka kullanıcının channel_key'ine erişim device_id + workspace_id eşleşmesi gerektirir."
+    },
+    {
+      "category": "MITM",
+      "test": "Fingerprint hash algoritması",
+      "risk": "LOW",
+      "finding": "PASS: SHA-256 fingerprint kullanılıyor",
+      "detail": "Identity public key'den SHA-256 hash ile fingerprint üretiliyor."
+    },
+    {
+      "category": "MITM",
+      "test": "Safety Number mekanizması",
+      "risk": "LOW",
+      "finding": "PASS: Safety Number (60 haneli) mekanizması mevcut",
+      "detail": "Signal Protocol tarzı 60 haneli güvenlik numarası. Kullanıcılar karşılaştırabilir."
+    },
+    {
+      "category": "MITM",
+      "test": "TOFU (Trust On First Use)",
+      "risk": "LOW",
+      "finding": "PASS: TOFU modeli uygulanmış",
+      "detail": "İlk kullanımda güvenilen anahtar, sonraki değişikliklerde uyarı verilir."
+    },
+    {
+      "category": "MITM",
+      "test": "QR kod doğrulama",
+      "risk": "LOW",
+      "finding": "PASS: QR kod ile fingerprint doğrulama desteği",
+      "detail": "Kullanıcılar QR kod tarayarak fingerprint karşılaştırabilir."
+    },
+    {
+      "category": "MITM",
+      "test": "Key consistency check",
+      "risk": "LOW",
+      "finding": "PASS: verifyKeyConsistency fonksiyonu mevcut",
+      "detail": "Bilinen fingerprint ile mevcut fingerprint karşılaştırılıyor."
+    },
+    {
+      "category": "MITM",
+      "test": "Key değişikliği uyarısı",
+      "risk": "LOW",
+      "finding": "PASS: Key değişikliğinde MITM uyarısı veriliyor",
+      "detail": "\"Kullanıcının güvenlik anahtarı değişti! Olası MITM saldırısı\" uyarısı mevcut."
+    },
+    {
+      "category": "MITM",
+      "test": "Silent key replacement koruması",
+      "risk": "LOW",
+      "finding": "PASS: Anahtar değişikliği algılanıp bildirim veriliyor",
+      "detail": "Önceki fingerprint saklanıyor, değişiklik tespit edildiğinde kullanıcı uyarılıyor."
+    },
+    {
+      "category": "MITM",
+      "test": "X3DH imza doğrulama",
+      "risk": "LOW",
+      "finding": "PASS: X3DH handshake'te Ed25519 imza doğrulaması yapılıyor",
+      "detail": "Signed prekey'in imzası Ed25519 ile doğrulanıyor. MITM'de imza uyuşmazlığı tespit edilir."
+    },
+    {
+      "category": "Replay Attack",
+      "test": "Seen messages tracking",
+      "risk": "LOW",
+      "finding": "PASS: Mesaj görüldü takibi (isMessageSeen + markMessageSeen) mevcut",
+      "detail": "Her çözülen mesaj seen olarak işaretleniyor. Aynı mesaj tekrar gönderilirse reddediliyor."
+    },
+    {
+      "category": "Replay Attack",
+      "test": "Monotonic index validation",
+      "risk": "LOW",
+      "finding": "PASS: Strict monotonic index kontrolü mevcut",
+      "detail": "messageIndex < recvCount ise mesaj reddediliyor (skipped key deposunda yoksa)."
+    },
+    {
+      "category": "Replay Attack",
+      "test": "DH ratchet forward secrecy",
+      "risk": "LOW",
+      "finding": "PASS: Yeni DH public key geldiğinde ratchet step yapılıyor",
+      "detail": "Her DH ratchet step'te yeni key material türetilir. Eski mesajlar yeni key ile çözülemez."
+    },
+    {
+      "category": "Replay Attack",
+      "test": "Skipped keys limiti",
+      "risk": "LOW",
+      "finding": "PASS: Atlanan mesaj anahtarları limitli",
+      "detail": "DoS saldırısını önlemek için skip limiti var."
+    },
+    {
+      "category": "Replay Attack",
+      "test": "Encrypted timestamp",
+      "risk": "LOW",
+      "finding": "PASS: Header'da encrypted timestamp mevcut",
+      "detail": "Mesaj header'ında şifreli timestamp saklanıyor. Eski mesajların replay'i tespit edilebilir."
+    },
+    {
+      "category": "Timing Analysis",
+      "test": "Generic error response",
+      "risk": "LOW",
+      "finding": "PASS: Decrypt hataları generic null döndürüyor",
+      "detail": "3 adet catch bloğu null döndürüyor. Hata türü dışarıya sızmıyor."
+    },
+    {
+      "category": "Timing Analysis",
+      "test": "Web Crypto API",
+      "risk": "LOW",
+      "finding": "PASS: Web Crypto API native constant-time operasyonlar",
+      "detail": "AES-GCM encrypt/decrypt, HKDF, ECDH işlemleri browser'ın native C++ implementasyonu ile yapılıyor. JavaScript timing side-channel riski minimal."
+    },
+    {
+      "category": "Timing Analysis",
+      "test": "Metadata padding",
+      "risk": "LOW",
+      "finding": "PASS: Mesaj boyutu padding'i mevcut",
+      "detail": "Mesajlar sabit blok boyutuna pad'leniyor. Boyut analizi zorlaştırılmış."
+    },
+    {
+      "category": "Timing Analysis",
+      "test": "Timing jitter",
+      "risk": "LOW",
+      "finding": "PASS: Timing jitter mekanizması tanımlı",
+      "detail": "Mesaj gönderim zamanlamasına rastgele gecikme eklenebiliyor."
+    },
+    {
+      "category": "Timing Analysis",
+      "test": "Channel key unwrap timing",
+      "risk": "LOW",
+      "finding": "INFO: unwrapChannelKey hata durumunda null döndürüyor",
+      "detail": "AES-GCM auth tag kontrolü Web Crypto API'da constant-time. JavaScript seviyesinde ek timing leak minimal."
+    },
+    {
+      "category": "Key Rotation",
+      "test": "Dual rotation trigger",
+      "risk": "LOW",
+      "finding": "PASS: Zaman bazlı + mesaj bazlı çift rotasyon tetikleyici",
+      "detail": "ROTATION_INTERVAL_MS (zaman) ve MAX_MESSAGES_PER_EPOCH (mesaj sayısı) ile rotasyon."
+    },
+    {
+      "category": "Key Rotation",
+      "test": "Eski key imhası",
+      "risk": "LOW",
+      "finding": "PASS: Rotasyon sonrası eski DH secret key secureZero ile siliniyor",
+      "detail": "performKeyRotation: oldSecretKeyBytes ve oldRootKeyBytes secureZero ile sıfırlanıyor."
+    },
+    {
+      "category": "Key Rotation",
+      "test": "Session rekey grace period",
+      "risk": "LOW",
+      "finding": "PASS: 5 dakika grace window ile hem eski hem yeni key kabul",
+      "detail": "REKEY_GRACE_WINDOW_MS = 5 dakika. Bu sürede mesaj kaybı önleniyor."
+    },
+    {
+      "category": "Key Rotation",
+      "test": "Channel key rotation + grace",
+      "risk": "LOW",
+      "finding": "PASS: Channel key rotation + 1 saat grace period",
+      "detail": "rotateChannelKey: Eski key geçmişe taşınır, 1 saat grace period sonrası silinir."
+    },
+    {
+      "category": "Key Rotation",
+      "test": "Expired key cleanup",
+      "risk": "LOW",
+      "finding": "PASS: Grace period sonrası eski key'ler temizleniyor",
+      "detail": "cleanupExpiredKeys: Grace period geçmiş key'ler otomatik silinir."
+    },
+    {
+      "category": "Key Rotation",
+      "test": "Message loss riski",
+      "risk": "LOW",
+      "finding": "PASS: Grace period ile mesaj kaybı minimize edilmiş",
+      "detail": "Session rekey: 5dk grace. Channel key: 1 saat grace. Ratchet: DH ratchet ile otomatik senkronizasyon."
+    },
+    {
+      "category": "Key Rotation",
+      "test": "Signed prekey rotation",
+      "risk": "LOW",
+      "finding": "PASS: 7 günlük signed prekey rotasyonu",
+      "detail": "SPK_ROTATION_INTERVAL_MS = 7 gün. Periyodik olarak yenileniyor."
+    },
+    {
+      "category": "Key Rotation",
+      "test": "OPK otomatik yenileme",
+      "risk": "LOW",
+      "finding": "PASS: One-time prekey'ler tükendiğinde otomatik yenileniyor",
+      "detail": "MIN_OPK_COUNT altına düşünce OPK_BATCH_SIZE kadar yeni OPK üretiliyor."
+    },
+    {
+      "category": "Memory Inspection",
+      "test": "Ratchet memory zeroing",
+      "risk": "LOW",
+      "finding": "PASS: ratchet.ts'de 15 adet secureZero çağrısı",
+      "detail": "messageKey, IV, DH output, rootKey bytes, headerKey bytes sıfırlanıyor."
+    },
+    {
+      "category": "Memory Inspection",
+      "test": "Channel key memory zeroing",
+      "risk": "LOW",
+      "finding": "PASS: channelKeyManager.ts'de 4 adet fill(0) çağrısı",
+      "detail": "wrappingKeyBytes ve sharedSecret kullanım sonrası sıfırlanıyor."
+    },
+    {
+      "category": "Memory Inspection",
+      "test": "Device-bound key protection",
+      "risk": "LOW",
+      "finding": "PASS: CryptoKey extractable:false + device-bound AES-GCM",
+      "detail": "Private key'ler IndexedDB'de device-bound şifreli. CryptoKey nesneleri extractable:false."
+    },
+    {
+      "category": "Memory Inspection",
+      "test": "JavaScript GC sınırlaması",
+      "risk": "MEDIUM",
+      "finding": "WARN: JavaScript'te garanti memory zeroing mümkün değil",
+      "detail": "secureZero Uint8Array'i sıfırlasa bile JavaScript GC kopyalar bırakabilir. Bu, tüm browser tabanlı uygulamaların ortak sınırlamasıdır. Mitigasyon: Hassas veriler mümkün olduğunca kısa süre bellekte tutulur, CryptoKey nesneleri extractable:false ile korunur."
+    },
+    {
+      "category": "Memory Inspection",
+      "test": "Secure delete (overwrite)",
+      "risk": "LOW",
+      "finding": "PASS: Silme öncesi rastgele veri ile üzerine yazma",
+      "detail": "deleteEncryptedData: Önce random bytes ile overwrite, sonra delete. Disk kalıntısı riski azaltılmış."
+    },
+    {
+      "category": "Memory Inspection",
+      "test": "HMAC tamper detection",
+      "risk": "LOW",
+      "finding": "PASS: IndexedDB verileri HMAC ile bütünlük kontrolü",
+      "detail": "Device-bound şifreleme + HMAC-SHA256 tamper detection. Veri değiştirilirse tespit edilir."
+    },
+    {
+      "category": "Multi-Device",
+      "test": "Device-specific key storage",
+      "risk": "LOW",
+      "finding": "PASS: Anahtar depolama workspace_id + device_id ile izole",
+      "detail": "Her cihaz kendi identity key pair'ine sahip. Cihazlar arası key paylaşımı yok."
+    },
+    {
+      "category": "Multi-Device",
+      "test": "Per-device channel key dağıtımı",
+      "risk": "LOW",
+      "finding": "PASS: Channel key her device için ayrı ECDH ile şifreleniyor",
+      "detail": "distributeChannelKey: Her device_id için ayrı wrapped kopya oluşturulur."
+    },
+    {
+      "category": "Multi-Device",
+      "test": "Ratchet state izolasyonu",
+      "risk": "MEDIUM",
+      "finding": "WARN: Ratchet state workspace_id + channel_id ile saklanıyor (device_id yok)",
+      "detail": "Aynı kullanıcı iki cihazda login olursa ratchet state çakışabilir. Ancak IndexedDB device-bound olduğu için her cihazın kendi ratchet state'i vardır. Risk: İki cihazdan aynı anda mesaj gönderilirse sendCount çakışması olabilir."
+    },
+    {
+      "category": "Multi-Device",
+      "test": "Device-bound encryption",
+      "risk": "LOW",
+      "finding": "PASS: Her cihazın kendi device_id'sinden türetilmiş wrap key'i var",
+      "detail": "IndexedDB verileri device-specific AES-GCM ile şifreli. Bir cihazın verisi diğerinde çözülemez."
+    },
+    {
+      "category": "Multi-Device",
+      "test": "Channel key senkronizasyonu",
+      "risk": "LOW",
+      "finding": "PASS: Channel key Supabase üzerinden per-device dağıtılıyor",
+      "detail": "Her cihaz kendi encrypted_channel_key'ini Supabase'den çeker ve kendi private key'i ile çözer."
+    },
+    {
+      "category": "Multi-Device",
+      "test": "Concurrent message sending",
+      "risk": "MEDIUM",
+      "finding": "WARN: İki cihazdan eşzamanlı mesaj gönderiminde ratchet desenkronizasyonu riski",
+      "detail": "Double Ratchet protokolünde aynı kullanıcının iki cihazı aynı anda mesaj gönderirse sendCount çakışması olabilir. Mitigasyon: Her cihaz bağımsız ratchet session'a sahip. Signal'de bu sorun \"linked devices\" ile çözülür (her device ayrı session)."
+    }
+  ]
+}
