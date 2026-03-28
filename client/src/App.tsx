@@ -42,7 +42,8 @@ function Router() {
   return (
     <Suspense fallback={<RouteLoader />}>
       <Switch>
-        <Route path="/"        component={LandingPage} />
+        <Route path="/"        component={RedirectToChat} />
+        <Route path="/landing" component={LandingPage} />
         <Route path="/app"     component={RedirectToChat} />
         <Route path="/chat"    component={Home} />
         <Route path="/terms"   component={TermsOfService} />
